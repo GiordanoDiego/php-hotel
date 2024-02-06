@@ -3,7 +3,10 @@
 
 
 /* -----------------GENERAL RULE----------------- */
-
+body{
+    background-color: black;
+    color: white;
+}
 
 /* -----------------HEADER RULE----------------- */
 
@@ -42,5 +45,6 @@
 
 /* -----------------DEBUG----------------- */
 .debug .container {
-    border: 1px dashed red;
+    border: 1px solid white;
+    padding: 10px;
 }

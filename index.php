@@ -68,16 +68,45 @@
         <!-- START MAIN -->
         <main>
             <div class="container">
-                <div class="hotels_container">
-                    <ul>
-                        <?php 
-                            foreach ($hotels as $hotel){
-                                echo "<li>".$hotel["name"]."</li>";
-                            }
-                        ?>
-                    </ul>
-                </div>
+               <div  class=" d-flex flex-wrap justify-content-between ">
+                    <?php 
+                            foreach ($hotels as $hotel){ ?>
+                            <div>
+                                <div class="card text-bg-warning mb-3" style="max-width: 18rem;">
+                                    <div class="card-header">
+                                        <?php echo $hotel["name"]; ?>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-title">
+                                            <?php echo $hotel["description"]; ?>
+                                        </p>
+                                        <p class="card-text">
+                                        
+                                                <?php 
+                                                    foreach ($hotel as $key => $value){
+                                                        if($key != "name" && $key != "description" && $key != "parking"){
+                                                            echo "<div><strong>". ucfirst($key) .": "."</strong>". $value ."</div>";
+                                                        }  
+                                                    }; 
+                                                ?>
+                                                <?php
+                                                    if($hotel["parking"] == true){
+                                                        echo "<div><strong>". "Parking" .": "."</strong>". "Disponibile" ."</div>";  
+                                                    }  else{
+                                                        echo "<div><strong>". "Parking" .": "."</strong>". "Non disponibile" ."</div>";  
+                                                    }
+                                                ?>
+                                         
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php }  ?>
+               </div>
+              
             </div>
+
+
         </main>
         <!-- END MAIN -->
 
