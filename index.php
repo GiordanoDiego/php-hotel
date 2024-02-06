@@ -68,40 +68,87 @@
         <!-- START MAIN -->
         <main>
             <div class="container">
-               <div  class=" d-flex flex-wrap justify-content-between ">
-                    <?php 
-                            foreach ($hotels as $hotel){ ?>
-                            <div>
-                                <div class="card text-bg-warning mb-3" style="max-width: 18rem;">
-                                    <div class="card-header">
-                                        <?php echo $hotel["name"]; ?>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-title">
-                                            <?php echo $hotel["description"]; ?>
-                                        </p>
-                                        <p class="card-text">
-                                        
-                                                <?php 
-                                                    foreach ($hotel as $key => $value){
-                                                        if($key != "name" && $key != "description" && $key != "parking"){
-                                                            echo "<div><strong>". ucfirst($key) .": "."</strong>". $value ."</div>";
-                                                        }  
-                                                    }; 
-                                                ?>
-                                                <?php
-                                                    if($hotel["parking"] == true){
-                                                        echo "<div><strong>". "Parking" .": "."</strong>". "Disponibile" ."</div>";  
-                                                    }  else{
-                                                        echo "<div><strong>". "Parking" .": "."</strong>". "Non disponibile" ."</div>";  
-                                                    }
-                                                ?>
-                                         
-                                        </p>
+                <div class= "mb-5">
+                    <form action="" method="get">
+                       
+                            <label for="parkingYN">Preferenza parcheggio:</label>
+                            <select name="parkingYN" id="parkingYN">
+                                <option value="">-</option>
+                                <option value="Y">Disponibile</option> 
+                                <option value="N">Non disponibile</option> 
+                            </select> 
+                      
+                        <button class="ms-2 btn btn-warning">Filtra</button>
+                    </form>
+                </div>
+                
+                <?php
+                    $parkingFilter = null;
+
+                    if(isset($_GET['parkingYN']) && !empty($_GET['parkingYN'])) {
+                        $parkingFilter = $_GET["parkingYN"];
+                         
+                        if($parkingFilter == "Y"){
+                            $parkingFilter = true;
+                        } else {
+                            $parkingFilter = false;
+                        }
+                        // var_dump($parkingFilter);  
+                        //$function(hotel) è tipo foreach
+                        // function my_array_filter($array, $funzioneUtente) {
+                        //     foreach($array as $key => $value) {
+                        //         $funzioneUtente($value);
+                        //     }
+                        // }
+                        $hotels = array_filter($hotels, function($hotel) use ($parkingFilter) {
+                            return $hotel["parking"] === $parkingFilter;
+                        });
+                    }
+                    
+                ?>
+               
+               <div  class=" d-flex flex-wrap">
+                    <?php foreach ($hotels as $hotel){ ?>
+                    <?php
+                        // if($parkingFilter !== null) {
+                        //     if($parkingFilter !== $hotel['parking']) {
+                        //         continue;
+                        //     }
+                        // }
+                    ?> 
+                                <div>
+                                    <div class="card text-bg-warning mb-3 me-3" style="max-width: 18rem;">
+                                        <div class="card-header">
+                                            <?php echo $hotel["name"]; ?>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-title">
+                                                <?php echo $hotel["description"]; ?>
+                                            </p>
+                                            <p class="card-text">
+                                            
+                                                    <?php 
+                                                        foreach ($hotel as $key => $value){
+                                                            if($key != "name" && $key != "description" && $key != "parking"){
+                                                                echo "<div><strong>". ucfirst($key) .": "."</strong>". $value ."</div>";
+                                                            }  
+                                                        }; 
+                                                    ?>
+                                                    <?php
+                                                        if($hotel["parking"] == true){
+                                                            echo "<div><strong>". "Parking" .": "."</strong>". "Disponibile" ."</div>";  
+                                                        }  else{
+                                                            echo "<div><strong>". "Parking" .": "."</strong>". "Non disponibile" ."</div>";  
+                                                        }
+                                                    ?>
+                                            
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php }  ?>
+                    <?php 
+                        }
+                    ?>
                </div>
               
             </div>
